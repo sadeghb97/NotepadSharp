@@ -10,3 +10,4 @@ E:\MyWorks\Programming\Csharp\Exercise\Project 1\App5\WindowsFormsApplication1\W
 E:\MyWorks\Programming\Csharp\Exercise\Project 1\App5\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
 E:\MyWorks\Programming\Csharp\Exercise\Project 1\App5\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\Notepad#.exe
 E:\MyWorks\Programming\Csharp\Exercise\Project 1\App5\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\Notepad#.pdb
+E:\MyWorks\Programming\Csharp\Exercise\Project 1\App5\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache

@@ -13,6 +13,7 @@ namespace WindowsFormsApplication1
     {
         myUndo undoClass = new myUndo();
         string fn;
+        string originalStr;
         int mainFormHeight, mainFormWidth;
         Boolean statusbarVisible;
         //Moteghayyeri ke neshan midahad statusbar visible ya unvisible ast hata zamani ke statusbar enable
@@ -126,6 +127,17 @@ namespace WindowsFormsApplication1
             if (bom[0] == 0 && bom[1] == 0 && bom[2] == 0xfe && bom[3] == 0xff) return Encoding.UTF32;
             else return Encoding.Default; //ANSI
         }
+
+        public Boolean isHaveCharacter(string str)
+        {
+            foreach (char c in str)
+            {
+                if (Char.IsLetterOrDigit(c) || Char.IsSymbol(c))
+                    return true;
+            }
+            return false;
+        }
+
         private Encoding sendEncodingFromMenu()
         {
             ToolStripMenuItem checkedMenu=new ToolStripMenuItem();
@@ -176,20 +188,20 @@ namespace WindowsFormsApplication1
         {
             if (txtgeneral.Text == "")
             {
-                cutToolStripMenuItem.Enabled = false;
-                copyToolStripMenuItem.Enabled = false;
-                deleteToolStripMenuItem.Enabled = false;
                 findToolStripMenuItem.Enabled = false;
                 fIndNextToolStripMenuItem.Enabled = false;
             }
             else
             {
-                cutToolStripMenuItem.Enabled = true;
-                copyToolStripMenuItem.Enabled = true;
-                deleteToolStripMenuItem.Enabled = true;
                 findToolStripMenuItem.Enabled = true;
                 fIndNextToolStripMenuItem.Enabled = true;
             }
+
+            if (txtgeneral.SelectionStart == txtgeneral.Text.Length) deleteToolStripMenuItem.Enabled = false;
+
+            if (Clipboard.ContainsText()) pasteToolStripMenuItem.Enabled = true;
+            else pasteToolStripMenuItem.Enabled = false;
+
             undoClass.setUndoRedoChecked(this);
             LinesGotoActiverAndDeactiver();
         }
@@ -226,6 +238,14 @@ namespace WindowsFormsApplication1
             undoClass.startFromBeginning(txtgeneral, this);
             textChangedUndoSetText = false;
             SaveFlag = true;
+            txtgeneral.SelectionStart = 0;
+            txtgeneral.SelectionLength = 0;
+
+            if (txtgeneral.ReadOnly)
+            {
+                txtgeneral.ReadOnly = false;
+                readOnlyToolStripMenuItem_Click(null, null);
+            }
         }
         //Mostaghim estefade nashavad chun etelaate file ghabl az bein miravad.
 
@@ -240,6 +260,12 @@ namespace WindowsFormsApplication1
             else statusbarVisible = true;
             StatusBar1.Visible = statusToolStripMenuItem.Checked;
         }
+
+        private void topMostToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.TopMost = topMostToolStripMenuItem.Checked;
+        }
+
         private void fontToolStripMenuItem_Click(object sender, EventArgs e)
         {
             fontDialog1.AllowScriptChange = false;
@@ -272,6 +298,13 @@ namespace WindowsFormsApplication1
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            string strForSave;
+            if (txtgeneral.ReadOnly)
+                strForSave = originalStr;
+            else
+                strForSave = txtgeneral.Text;
+
+
             if (fn == null)
             {
                 DialogResult x;
@@ -281,7 +314,7 @@ namespace WindowsFormsApplication1
                 if (x==DialogResult.OK)
                 {
                     fn = saveFileDialog1.FileName;
-                    System.IO.File.WriteAllText(fn, txtgeneral.Text,sendEncodingFromMenu());
+                    System.IO.File.WriteAllText(fn, strForSave,sendEncodingFromMenu());
                     SaveFlag = true;
                     setTitle();
                     StoreSaveAndOpenDialogSettings();
@@ -289,7 +322,7 @@ namespace WindowsFormsApplication1
             }
             else if (fn != null)
             {
-                System.IO.File.WriteAllText(fn, txtgeneral.Text,sendEncodingFromMenu());
+                System.IO.File.WriteAllText(fn, strForSave,sendEncodingFromMenu());
                 SaveFlag = true;
             }
         }
@@ -390,6 +423,12 @@ namespace WindowsFormsApplication1
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            string strForSave;
+            if (txtgeneral.ReadOnly)
+                strForSave = originalStr;
+            else
+                strForSave = txtgeneral.Text;
+
             DialogResult x;
             openFileDialog1.InitialDirectory = NotepadSharp.Properties.Settings.Default.SaveAndOpenDialogPath;
             if (sendTitle() != null) saveFileDialog1.FileName = sendTitle();
@@ -399,7 +438,7 @@ namespace WindowsFormsApplication1
             {
                 fn = saveFileDialog1.FileName;
                 setTitle();
-                System.IO.File.WriteAllText(fn, txtgeneral.Text,sendEncodingFromMenu());
+                System.IO.File.WriteAllText(fn, strForSave,sendEncodingFromMenu());
                 SaveFlag = true;
                 StoreSaveAndOpenDialogSettings();
             }
@@ -408,6 +447,16 @@ namespace WindowsFormsApplication1
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (txtgeneral.SelectionLength != 0) Clipboard.SetText(txtgeneral.SelectedText);
+            else
+            {
+                if(txtgeneral.Text=="") Clipboard.SetText(Environment.NewLine);
+                else
+                {
+                    int currentLine = txtgeneral.GetLineFromCharIndex(txtgeneral.SelectionStart);
+                    string clipText = txtgeneral.Lines[currentLine];
+                    Clipboard.SetText(clipText + Environment.NewLine);
+                }
+            }
         }
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -423,10 +472,20 @@ namespace WindowsFormsApplication1
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            undoClass.setText(txtgeneral,this);
-            txtgeneral.SelectedText = "";
-            undoClass.setText(txtgeneral,this);
-            undoClass.aghabgardTruer();
+            if (txtgeneral.SelectionLength > 0)
+            {
+                undoClass.setText(txtgeneral, this);
+                txtgeneral.SelectedText = "";
+                undoClass.setText(txtgeneral, this);
+                undoClass.aghabgardTruer();
+            }
+
+            else if (txtgeneral.SelectionStart != txtgeneral.TextLength)
+            {
+                txtgeneral.SelectionStart++;
+                SendKeys.Send("{BS}");
+                txtgeneral.Focus();
+            }
         }
 
         private void cutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -435,6 +494,62 @@ namespace WindowsFormsApplication1
             {
                 copyToolStripMenuItem_Click(null, null);
                 deleteToolStripMenuItem_Click(null, null);
+            }
+            else
+            {
+                copyToolStripMenuItem_Click(null, null);
+                if (txtgeneral.Text != "")
+                {
+                    int currentLine = txtgeneral.GetLineFromCharIndex(txtgeneral.SelectionStart);
+                    int lastLine = txtgeneral.GetLineFromCharIndex(txtgeneral.Text.Length);
+                    string remStr = txtgeneral.Lines[currentLine];
+                    int remLength = remStr.Length;
+                    Boolean remHaveChar = isHaveCharacter(remStr);
+
+                    if (remHaveChar)
+                    {
+                        undoClass.setText(txtgeneral, this);
+                    }
+
+                    string firstStr;
+                    if (currentLine == 0) firstStr = "";
+                    else
+                    {
+                        firstStr = txtgeneral.Text.Substring(0, txtgeneral.GetFirstCharIndexOfCurrentLine()-2);
+                    }
+
+                    if (remHaveChar)
+                        undoClass.setText(txtgeneral, this);
+
+                    if (currentLine == lastLine)
+                    {
+                        if (currentLine != 0) firstStr += Environment.NewLine;
+                        txtgeneral.Text = firstStr;
+                        txtgeneral.SelectionStart = txtgeneral.TextLength;                     
+                    }
+                    else
+                    {
+                        int secondStrStart = txtgeneral.GetFirstCharIndexOfCurrentLine() + remLength + 2;
+                        string secondStr = txtgeneral.Text.Substring(secondStrStart);
+                        if (firstStr != "")
+                        {
+                            txtgeneral.Text = firstStr + Environment.NewLine + secondStr;
+                            txtgeneral.SelectionStart = firstStr.Length + 2;
+                        }
+                        else
+                        {
+                            txtgeneral.Text = secondStr;
+                            txtgeneral.SelectionStart = 0;
+                        }
+                    }
+
+                    if (remHaveChar)
+                    {
+                        undoClass.setText(txtgeneral, this);
+                        undoClass.aghabgardTruer();
+                    }
+
+                }
             }
         }
 
@@ -576,7 +691,13 @@ namespace WindowsFormsApplication1
                 txtgeneral.SelectedText = "\t";
                 txtgeneral.SelectionStart = temp + 1;
             }
-            txtgeneral_KeyDown(null, e);
+            if (e.KeyCode == Keys.Delete)
+            {
+                if (deleteToolStripMenuItem.Checked)
+                    deleteToolStripMenuItem_Click(null, null);
+            }
+            if (e.KeyCode == Keys.Down || e.KeyCode == Keys.Up || e.KeyCode == Keys.Right || e.KeyCode == Keys.Left)
+                setStatusBarRowColumn();
         }
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -609,28 +730,29 @@ namespace WindowsFormsApplication1
         private void txtgeneral_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Down || e.KeyCode == Keys.Up || e.KeyCode == Keys.Right || e.KeyCode == Keys.Left)
-            {
                 setStatusBarRowColumn();
-            }
+
             if (e.Control && e.KeyCode == Keys.ShiftKey)
             {
                 e.Handled = true;
             }
-            if (e.KeyCode == Keys.Delete)
+
+            if (e.Control && (e.KeyCode == Keys.Add || e.KeyCode==Keys.Subtract))
             {
-                if (txtgeneral.SelectionStart != txtgeneral.TextLength)
-                {
-                    KeyPressEventArgs kp = new KeyPressEventArgs('\b');
-                    KeyEventArgs k = new KeyEventArgs(Keys.Back);
-                    txtgeneral.SelectionStart++;
-                    txtgeneral_KeyDown(null, k);
-                    txtgeneral_KeyPress(null, kp);
-                    SendKeys.Send("{BS}");
-                    txtgeneral_KeyUp(null, k);
-                    txtgeneral.Focus();
-                }
+                e.SuppressKeyPress = true;
+                Font f = txtgeneral.Font;
+                float fontSize = f.Size;
+                if (e.KeyCode == Keys.Add && fontSize<=1000) fontSize++;
+                else if(fontSize>=2) fontSize--;
+                txtgeneral.Font = new Font(f.Name, fontSize, f.Style);
+            }
+
+            if (e.Shift && (e.KeyCode == Keys.Enter))
+            {
+                for(int i=0; 4> i; i++) SendKeys.Send(" ");
             }
         }
+
         private void setStatusBarRowColumn()
         {
             int row = txtgeneral.GetLineFromCharIndex(txtgeneral.SelectionStart) + 1;
@@ -642,105 +764,34 @@ namespace WindowsFormsApplication1
         {
             setStatusBarRowColumn();
         }
-        private void selectionActiverAndDeactiver()
-        {
-            if (txtgeneral.SelectionLength > 0)
-            {
-                copyToolStripMenuItem.Enabled = true;
-                cutToolStripMenuItem.Enabled = true;
-                deleteToolStripMenuItem.Enabled = true;
-            }
-            else
-            {
-                copyToolStripMenuItem.Enabled = false;
-                cutToolStripMenuItem.Enabled = false;
-                deleteToolStripMenuItem.Enabled = false;
-            }
-        }
 
         private void editToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
-            selectionActiverAndDeactiver();
-            if (Clipboard.ContainsText()) pasteToolStripMenuItem.Enabled = true;
-            else pasteToolStripMenuItem.Enabled = false;
+            txtmainActiverAndDeactiver();
         }
         private void saveSettings()
         {
-            /*string[] settings = new string[13];
-            settings[0]= txtgeneral.BackColor.ToArgb().ToString();
-            settings[1] = txtgeneral.ForeColor.ToArgb().ToString();
-            settings[2] = txtgeneral.Font.Name;
-            settings[3] = Convert.ToInt16(txtgeneral.Font.Size).ToString();
-            settings[4] = txtgeneral.Font.Style.ToString();
-            settings[5] = mainFormHeight.ToString();
-            settings[6] = mainFormWidth.ToString();
-            settings[7] = statusToolStripMenuItem.Checked.ToString();
-            settings[8] = wordWrapToolStripMenuItem.Checked.ToString();
-            settings[9] = pageSetupDialog1.PageSettings.Margins.Left.ToString();
-            settings[10] = pageSetupDialog1.PageSettings.Margins.Top.ToString();
-            settings[11] = pageSetupDialog1.PageSettings.Margins.Right.ToString();
-            settings[12] = pageSetupDialog1.PageSettings.Margins.Bottom.ToString();
-            System.IO.File.WriteAllLines(settingsPath, settings);*/
-
-
             NotepadSharp.Properties.Settings.Default.BackColor = txtgeneral.BackColor.ToArgb().ToString();
             NotepadSharp.Properties.Settings.Default.ForeColor = txtgeneral.ForeColor.ToArgb().ToString();
             NotepadSharp.Properties.Settings.Default.FontName = txtgeneral.Font.Name;
-            NotepadSharp.Properties.Settings.Default.FontSize = Convert.ToInt16(txtgeneral.Font.Size).ToString();
+            NotepadSharp.Properties.Settings.Default.FontSize = txtgeneral.Font.Size;
             NotepadSharp.Properties.Settings.Default.FontStyle = txtgeneral.Font.Style.ToString();
-            NotepadSharp.Properties.Settings.Default.FormHeight = mainFormHeight.ToString();
-            NotepadSharp.Properties.Settings.Default.FormWidth = mainFormWidth.ToString();
-            NotepadSharp.Properties.Settings.Default.StatusChecked = statusToolStripMenuItem.Checked.ToString();
-            NotepadSharp.Properties.Settings.Default.WordWrapChecked = wordWrapToolStripMenuItem.Checked.ToString();
-            NotepadSharp.Properties.Settings.Default.PageSetupMarginLeft = pageSetupDialog1.PageSettings.Margins.Left.ToString();
-            NotepadSharp.Properties.Settings.Default.PageSetupMarginTop = pageSetupDialog1.PageSettings.Margins.Top.ToString();
-            NotepadSharp.Properties.Settings.Default.PageSetupMarginRight = pageSetupDialog1.PageSettings.Margins.Right.ToString();
-            NotepadSharp.Properties.Settings.Default.PageSetupMarginBottom = pageSetupDialog1.PageSettings.Margins.Bottom.ToString();
+            NotepadSharp.Properties.Settings.Default.FormHeight = mainFormHeight;
+            NotepadSharp.Properties.Settings.Default.FormWidth = mainFormWidth;
+            NotepadSharp.Properties.Settings.Default.StatusChecked = statusToolStripMenuItem.Checked;
+            NotepadSharp.Properties.Settings.Default.topMostChecked = topMostToolStripMenuItem.Checked;
+            NotepadSharp.Properties.Settings.Default.WordWrapChecked = wordWrapToolStripMenuItem.Checked;
+            NotepadSharp.Properties.Settings.Default.PageSetupMarginLeft = pageSetupDialog1.PageSettings.Margins.Left;
+            NotepadSharp.Properties.Settings.Default.PageSetupMarginTop = pageSetupDialog1.PageSettings.Margins.Top;
+            NotepadSharp.Properties.Settings.Default.PageSetupMarginRight = pageSetupDialog1.PageSettings.Margins.Right;
+            NotepadSharp.Properties.Settings.Default.PageSetupMarginBottom = pageSetupDialog1.PageSettings.Margins.Bottom;
             NotepadSharp.Properties.Settings.Default.Save();
         }
         private void loadSettings()
         {
-            /*if (System.IO.File.Exists(settingsPath))
-            {
-                string[] settings = new string[12];
-                settings = System.IO.File.ReadAllLines(settingsPath);
-                txtgeneral.BackColor = Color.FromArgb(Convert.ToInt32(settings[0]));
-                txtgeneral.ForeColor = Color.FromArgb(Convert.ToInt32(settings[1]));
-                Font f = new Font(settings[2],Convert.ToInt16(settings[3]));
-                if (settings[4].Contains("Bold"))
-                    f = new Font(f.Name, f.Size,f.Style | FontStyle.Bold);
-                if (settings[4].Contains("Italic"))
-                    f = new Font(f.Name, f.Size, f.Style | FontStyle.Italic);
-                if (settings[4].Contains("Underline"))
-                    f = new Font(f.Name, f.Size, f.Style | FontStyle.Underline);
-                if (settings[4].Contains("Strikeout"))
-                    f = new Font(f.Name, f.Size, f.Style | FontStyle.Strikeout);
-                txtgeneral.Font = f;
-                this.Height = Convert.ToInt32(settings[5]);
-                this.Width = Convert.ToInt32(settings[6]);
-                if (Convert.ToBoolean(settings[7]))
-                {
-                    statusbarVisible = true;
-                    StatusBar1.Visible = true;
-                    statusToolStripMenuItem.Checked = true;
-                }
-                else
-                {
-                    statusbarVisible = false;
-                    StatusBar1.Visible = false;
-                    statusToolStripMenuItem.Checked = false;
-                }
-                wordWrapToolStripMenuItem.Checked = Convert.ToBoolean(settings[8]);
-                wordwrapActiverAndDeactiver();
-                pageSetupDialog1.PageSettings.Margins.Left = Convert.ToInt32(settings[9]);
-                pageSetupDialog1.PageSettings.Margins.Top = Convert.ToInt32(settings[10]);
-                pageSetupDialog1.PageSettings.Margins.Right = Convert.ToInt32(settings[11]);
-                pageSetupDialog1.PageSettings.Margins.Bottom = Convert.ToInt32(settings[12]);
-            }*/
-
             txtgeneral.BackColor = Color.FromArgb(Convert.ToInt32(NotepadSharp.Properties.Settings.Default.BackColor));
             txtgeneral.ForeColor = Color.FromArgb(Convert.ToInt32(NotepadSharp.Properties.Settings.Default.ForeColor));
-            Font f = new Font(NotepadSharp.Properties.Settings.Default.FontName, Convert.ToInt16(NotepadSharp.Properties.Settings.Default.FontSize));
+            Font f = new Font(NotepadSharp.Properties.Settings.Default.FontName, NotepadSharp.Properties.Settings.Default.FontSize);
             if (NotepadSharp.Properties.Settings.Default.FontStyle.Contains("Bold"))
                 f = new Font(f.Name, f.Size, f.Style | FontStyle.Bold);
             if (NotepadSharp.Properties.Settings.Default.FontStyle.Contains("Italic"))
@@ -750,9 +801,11 @@ namespace WindowsFormsApplication1
             if (NotepadSharp.Properties.Settings.Default.FontStyle.Contains("Strikeout"))
                 f = new Font(f.Name, f.Size, f.Style | FontStyle.Strikeout);
             txtgeneral.Font = f;
-            this.Height = Convert.ToInt32(NotepadSharp.Properties.Settings.Default.FormHeight);
-            this.Width = Convert.ToInt32(NotepadSharp.Properties.Settings.Default.FormWidth);
-            if (Convert.ToBoolean(NotepadSharp.Properties.Settings.Default.StatusChecked))
+
+            this.Height = NotepadSharp.Properties.Settings.Default.FormHeight;
+            this.Width = NotepadSharp.Properties.Settings.Default.FormWidth;
+
+            if (NotepadSharp.Properties.Settings.Default.StatusChecked)
             {
                 statusbarVisible = true;
                 StatusBar1.Visible = true;
@@ -764,12 +817,16 @@ namespace WindowsFormsApplication1
                 StatusBar1.Visible = false;
                 statusToolStripMenuItem.Checked = false;
             }
-            wordWrapToolStripMenuItem.Checked = Convert.ToBoolean(NotepadSharp.Properties.Settings.Default.WordWrapChecked);
+
+            topMostToolStripMenuItem.Checked = NotepadSharp.Properties.Settings.Default.topMostChecked;
+            topMostToolStripMenuItem_Click(null, null);
+
+            wordWrapToolStripMenuItem.Checked = NotepadSharp.Properties.Settings.Default.WordWrapChecked;
             wordwrapActiverAndDeactiver();
-            pageSetupDialog1.PageSettings.Margins.Left = Convert.ToInt32(NotepadSharp.Properties.Settings.Default.PageSetupMarginLeft);
-            pageSetupDialog1.PageSettings.Margins.Top = Convert.ToInt32(NotepadSharp.Properties.Settings.Default.PageSetupMarginTop);
-            pageSetupDialog1.PageSettings.Margins.Right = Convert.ToInt32(NotepadSharp.Properties.Settings.Default.PageSetupMarginRight);
-            pageSetupDialog1.PageSettings.Margins.Bottom = Convert.ToInt32(NotepadSharp.Properties.Settings.Default.PageSetupMarginBottom);
+            pageSetupDialog1.PageSettings.Margins.Left = NotepadSharp.Properties.Settings.Default.PageSetupMarginLeft;
+            pageSetupDialog1.PageSettings.Margins.Top = NotepadSharp.Properties.Settings.Default.PageSetupMarginTop;
+            pageSetupDialog1.PageSettings.Margins.Right = NotepadSharp.Properties.Settings.Default.PageSetupMarginRight;
+            pageSetupDialog1.PageSettings.Margins.Bottom = NotepadSharp.Properties.Settings.Default.PageSetupMarginBottom;
         }
 
         private void printToolStripMenuItem_Click(object sender, EventArgs e)
@@ -882,14 +939,6 @@ namespace WindowsFormsApplication1
         }
         private void setLogin()
         {
-            /*if (System.IO.File.Exists(logsPath))
-                System.IO.File.AppendAllText(logsPath, Environment.NewLine + "[" + sendCurrentTimeAndDate() + "] --> ");
-            else
-            {
-                if (!System.IO.Directory.Exists(logsDirectory))
-                    System.IO.Directory.CreateDirectory(logsDirectory);
-                System.IO.File.WriteAllText(logsPath, "[" + sendCurrentTimeAndDate() + "] --> ");
-            }*/
             LogIn = "[" + sendCurrentTimeAndDate() + "] --> ";
         }
 
@@ -921,9 +970,36 @@ namespace WindowsFormsApplication1
 
         }
 
+        private void readOnlyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            txtgeneral.ReadOnly = readOnlyToolStripMenuItem.Checked;
+
+            Boolean tempFlag = SaveFlag;
+            if (txtgeneral.ReadOnly)
+            {
+                originalStr = txtgeneral.Text;
+                StringBuilder generatedStr = new StringBuilder(originalStr);
+                for (int i = 0; generatedStr.Length > i; i++)
+                {
+                    if (generatedStr[i] == '\n' && i != 0 && generatedStr[i - 1] != '\r')
+                    {
+                        generatedStr.Remove(i, 1);
+                        generatedStr.Insert(i, "\r\n");
+                    }
+                }
+                txtgeneral.Text = generatedStr.ToString();
+            }
+            else
+            {
+                txtgeneral.Text = originalStr;
+                originalStr = "";
+            }
+            SaveFlag = tempFlag;
+        }
+
+
         private void setLogout()
         {
-            //System.IO.File.AppendAllText(logsPath, "[" + sendCurrentTimeAndDate() + "]");
             if (System.IO.File.Exists(logsPath))
                 System.IO.File.AppendAllText(logsPath, Environment.NewLine + LogIn + "[" + sendCurrentTimeAndDate() + "]");
             else
@@ -1012,8 +1088,14 @@ namespace WindowsFormsApplication1
                 tempSelectionStart[index] = tb.SelectionStart;
                 tempSelectionLength[index] = tb.SelectionLength;
                 currentposition++;
-                setUndoRedoChecked(frm);
             }
+            else if(tb.SelectionStart != tempSelectionStart[currentposition])
+            {
+                index = currentposition;
+                tempSelectionStart[index] = tb.SelectionStart;
+                tempSelectionLength[index] = tb.SelectionLength;
+            }
+            setUndoRedoChecked(frm);
         }
         public void Undo(TextBox tb, Frmmain frm)
         {
@@ -1049,6 +1131,7 @@ namespace WindowsFormsApplication1
                 tb.Text= temp[++currentposition];
                 tb.SelectionStart = tempSelectionStart[currentposition];
                 tb.SelectionLength = tempSelectionLength[currentposition];
+                tb.ScrollToCaret();
                 aghabgard = true;
             }
             setUndoRedoChecked(frm);

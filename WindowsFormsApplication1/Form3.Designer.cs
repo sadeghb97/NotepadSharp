@@ -43,17 +43,17 @@
             // lblfindwhat
             // 
             this.lblfindwhat.AutoSize = true;
-            this.lblfindwhat.Location = new System.Drawing.Point(9, 18);
+            this.lblfindwhat.Location = new System.Drawing.Point(8, 18);
             this.lblfindwhat.Name = "lblfindwhat";
-            this.lblfindwhat.Size = new System.Drawing.Size(72, 17);
+            this.lblfindwhat.Size = new System.Drawing.Size(71, 17);
             this.lblfindwhat.TabIndex = 0;
             this.lblfindwhat.Text = "Find What";
             // 
             // btnfindnext
             // 
-            this.btnfindnext.Location = new System.Drawing.Point(332, 7);
+            this.btnfindnext.Location = new System.Drawing.Point(290, 7);
             this.btnfindnext.Name = "btnfindnext";
-            this.btnfindnext.Size = new System.Drawing.Size(108, 29);
+            this.btnfindnext.Size = new System.Drawing.Size(94, 29);
             this.btnfindnext.TabIndex = 2;
             this.btnfindnext.Text = "Find Next";
             this.btnfindnext.UseVisualStyleBackColor = true;
@@ -62,42 +62,42 @@
             // chbmatchcase
             // 
             this.chbmatchcase.AutoSize = true;
-            this.chbmatchcase.Location = new System.Drawing.Point(12, 121);
+            this.chbmatchcase.Location = new System.Drawing.Point(10, 121);
             this.chbmatchcase.Name = "chbmatchcase";
-            this.chbmatchcase.Size = new System.Drawing.Size(102, 21);
+            this.chbmatchcase.Size = new System.Drawing.Size(98, 21);
             this.chbmatchcase.TabIndex = 5;
             this.chbmatchcase.Text = "Match case";
             this.chbmatchcase.UseVisualStyleBackColor = true;
             // 
             // txtfindwhat
             // 
-            this.txtfindwhat.Location = new System.Drawing.Point(118, 15);
+            this.txtfindwhat.Location = new System.Drawing.Point(103, 15);
             this.txtfindwhat.Name = "txtfindwhat";
-            this.txtfindwhat.Size = new System.Drawing.Size(196, 22);
+            this.txtfindwhat.Size = new System.Drawing.Size(172, 24);
             this.txtfindwhat.TabIndex = 0;
             this.txtfindwhat.TextChanged += new System.EventHandler(this.txtfindwhat_TextChanged);
             // 
             // lblreplacewith
             // 
             this.lblreplacewith.AutoSize = true;
-            this.lblreplacewith.Location = new System.Drawing.Point(9, 49);
+            this.lblreplacewith.Location = new System.Drawing.Point(8, 49);
             this.lblreplacewith.Name = "lblreplacewith";
-            this.lblreplacewith.Size = new System.Drawing.Size(96, 17);
+            this.lblreplacewith.Size = new System.Drawing.Size(93, 17);
             this.lblreplacewith.TabIndex = 5;
             this.lblreplacewith.Text = "Replace With:";
             // 
             // txtreplacewith
             // 
-            this.txtreplacewith.Location = new System.Drawing.Point(118, 47);
+            this.txtreplacewith.Location = new System.Drawing.Point(103, 47);
             this.txtreplacewith.Name = "txtreplacewith";
-            this.txtreplacewith.Size = new System.Drawing.Size(196, 22);
+            this.txtreplacewith.Size = new System.Drawing.Size(172, 24);
             this.txtreplacewith.TabIndex = 1;
             // 
             // btnreplace
             // 
-            this.btnreplace.Location = new System.Drawing.Point(332, 42);
+            this.btnreplace.Location = new System.Drawing.Point(290, 42);
             this.btnreplace.Name = "btnreplace";
-            this.btnreplace.Size = new System.Drawing.Size(108, 29);
+            this.btnreplace.Size = new System.Drawing.Size(94, 29);
             this.btnreplace.TabIndex = 3;
             this.btnreplace.Text = "Replace";
             this.btnreplace.UseVisualStyleBackColor = true;
@@ -105,9 +105,9 @@
             // 
             // btnreplaceAll
             // 
-            this.btnreplaceAll.Location = new System.Drawing.Point(332, 77);
+            this.btnreplaceAll.Location = new System.Drawing.Point(290, 77);
             this.btnreplaceAll.Name = "btnreplaceAll";
-            this.btnreplaceAll.Size = new System.Drawing.Size(108, 29);
+            this.btnreplaceAll.Size = new System.Drawing.Size(94, 29);
             this.btnreplaceAll.TabIndex = 4;
             this.btnreplaceAll.Text = "Replace All";
             this.btnreplaceAll.UseVisualStyleBackColor = true;
@@ -115,9 +115,9 @@
             // 
             // btncancel
             // 
-            this.btncancel.Location = new System.Drawing.Point(332, 112);
+            this.btncancel.Location = new System.Drawing.Point(290, 112);
             this.btncancel.Name = "btncancel";
-            this.btncancel.Size = new System.Drawing.Size(108, 29);
+            this.btncancel.Size = new System.Drawing.Size(94, 29);
             this.btncancel.TabIndex = 6;
             this.btncancel.Text = "Cancel";
             this.btncancel.UseVisualStyleBackColor = true;
@@ -125,9 +125,9 @@
             // 
             // frmreplace
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(452, 174);
+            this.ClientSize = new System.Drawing.Size(396, 174);
             this.Controls.Add(this.btncancel);
             this.Controls.Add(this.btnreplaceAll);
             this.Controls.Add(this.btnreplace);

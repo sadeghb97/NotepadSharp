@@ -1,0 +1,13 @@
+E:\MyWorks\Programming\Csharp\Exercise\Project 1\App5\WindowsFormsApplication1\WindowsFormsApplication1\bin\Release\Notepad#.exe.config
+E:\MyWorks\Programming\Csharp\Exercise\Project 1\App5\WindowsFormsApplication1\WindowsFormsApplication1\bin\Release\Notepad#.exe
+E:\MyWorks\Programming\Csharp\Exercise\Project 1\App5\WindowsFormsApplication1\WindowsFormsApplication1\bin\Release\Notepad#.pdb
+E:\MyWorks\Programming\Csharp\Exercise\Project 1\App5\WindowsFormsApplication1\WindowsFormsApplication1\obj\Release\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
+E:\MyWorks\Programming\Csharp\Exercise\Project 1\App5\WindowsFormsApplication1\WindowsFormsApplication1\obj\Release\WindowsFormsApplication1.Frmmain.resources
+E:\MyWorks\Programming\Csharp\Exercise\Project 1\App5\WindowsFormsApplication1\WindowsFormsApplication1\obj\Release\WindowsFormsApplication1.Frmfind.resources
+E:\MyWorks\Programming\Csharp\Exercise\Project 1\App5\WindowsFormsApplication1\WindowsFormsApplication1\obj\Release\WindowsFormsApplication1.frmreplace.resources
+E:\MyWorks\Programming\Csharp\Exercise\Project 1\App5\WindowsFormsApplication1\WindowsFormsApplication1\obj\Release\WindowsFormsApplication1.frmgoto.resources
+E:\MyWorks\Programming\Csharp\Exercise\Project 1\App5\WindowsFormsApplication1\WindowsFormsApplication1\obj\Release\WindowsFormsApplication1.frmabout.resources
+E:\MyWorks\Programming\Csharp\Exercise\Project 1\App5\WindowsFormsApplication1\WindowsFormsApplication1\obj\Release\NotepadSharp.Properties.Resources.resources
+E:\MyWorks\Programming\Csharp\Exercise\Project 1\App5\WindowsFormsApplication1\WindowsFormsApplication1\obj\Release\WindowsFormsApplication1.csproj.GenerateResource.Cache
+E:\MyWorks\Programming\Csharp\Exercise\Project 1\App5\WindowsFormsApplication1\WindowsFormsApplication1\obj\Release\Notepad#.exe
+E:\MyWorks\Programming\Csharp\Exercise\Project 1\App5\WindowsFormsApplication1\WindowsFormsApplication1\obj\Release\Notepad#.pdb

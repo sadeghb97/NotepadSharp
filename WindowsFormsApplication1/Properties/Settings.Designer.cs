@@ -62,9 +62,9 @@ namespace NotepadSharp.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("11")]
-        public string FontSize {
+        public float FontSize {
             get {
-                return ((string)(this["FontSize"]));
+                return ((float)(this["FontSize"]));
             }
             set {
                 this["FontSize"] = value;
@@ -86,9 +86,9 @@ namespace NotepadSharp.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("444")]
-        public string FormHeight {
+        public int FormHeight {
             get {
-                return ((string)(this["FormHeight"]));
+                return ((int)(this["FormHeight"]));
             }
             set {
                 this["FormHeight"] = value;
@@ -98,9 +98,9 @@ namespace NotepadSharp.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("685")]
-        public string FormWidth {
+        public int FormWidth {
             get {
-                return ((string)(this["FormWidth"]));
+                return ((int)(this["FormWidth"]));
             }
             set {
                 this["FormWidth"] = value;
@@ -110,9 +110,9 @@ namespace NotepadSharp.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public string StatusChecked {
+        public bool StatusChecked {
             get {
-                return ((string)(this["StatusChecked"]));
+                return ((bool)(this["StatusChecked"]));
             }
             set {
                 this["StatusChecked"] = value;
@@ -122,9 +122,9 @@ namespace NotepadSharp.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public string WordWrapChecked {
+        public bool WordWrapChecked {
             get {
-                return ((string)(this["WordWrapChecked"]));
+                return ((bool)(this["WordWrapChecked"]));
             }
             set {
                 this["WordWrapChecked"] = value;
@@ -134,9 +134,9 @@ namespace NotepadSharp.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public string PageSetupMarginLeft {
+        public int PageSetupMarginLeft {
             get {
-                return ((string)(this["PageSetupMarginLeft"]));
+                return ((int)(this["PageSetupMarginLeft"]));
             }
             set {
                 this["PageSetupMarginLeft"] = value;
@@ -146,9 +146,9 @@ namespace NotepadSharp.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public string PageSetupMarginTop {
+        public int PageSetupMarginTop {
             get {
-                return ((string)(this["PageSetupMarginTop"]));
+                return ((int)(this["PageSetupMarginTop"]));
             }
             set {
                 this["PageSetupMarginTop"] = value;
@@ -158,9 +158,9 @@ namespace NotepadSharp.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public string PageSetupMarginRight {
+        public int PageSetupMarginRight {
             get {
-                return ((string)(this["PageSetupMarginRight"]));
+                return ((int)(this["PageSetupMarginRight"]));
             }
             set {
                 this["PageSetupMarginRight"] = value;
@@ -170,9 +170,9 @@ namespace NotepadSharp.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public string PageSetupMarginBottom {
+        public int PageSetupMarginBottom {
             get {
-                return ((string)(this["PageSetupMarginBottom"]));
+                return ((int)(this["PageSetupMarginBottom"]));
             }
             set {
                 this["PageSetupMarginBottom"] = value;
@@ -188,6 +188,18 @@ namespace NotepadSharp.Properties {
             }
             set {
                 this["SaveAndOpenDialogPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool topMostChecked {
+            get {
+                return ((bool)(this["topMostChecked"]));
+            }
+            set {
+                this["topMostChecked"] = value;
             }
         }
     }
