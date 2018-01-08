@@ -73,11 +73,11 @@
             // lblcopyright
             // 
             this.lblcopyright.AutoSize = true;
-            this.lblcopyright.Location = new System.Drawing.Point(25, 92);
+            this.lblcopyright.Location = new System.Drawing.Point(67, 92);
             this.lblcopyright.Name = "lblcopyright";
-            this.lblcopyright.Size = new System.Drawing.Size(322, 17);
+            this.lblcopyright.Size = new System.Drawing.Size(224, 17);
             this.lblcopyright.TabIndex = 3;
-            this.lblcopyright.Text = "© 2016 Sadegh Bagherzadeh. All rights reserved.";
+            this.lblcopyright.Text = "© 2016 SBPro. All rights reserved.";
             // 
             // lbldeveloper
             // 

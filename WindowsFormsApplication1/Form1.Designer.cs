@@ -109,6 +109,7 @@
             this.txtgeneral.TabIndex = 0;
             this.txtgeneral.WordWrap = false;
             this.txtgeneral.Click += new System.EventHandler(this.txtgeneral_Click);
+            this.txtgeneral.RightToLeftChanged += new System.EventHandler(this.txtgeneral_RightToLeftChanged);
             this.txtgeneral.TextChanged += new System.EventHandler(this.txtgeneral_TextChanged);
             this.txtgeneral.DragDrop += new System.Windows.Forms.DragEventHandler(this.Frmmain_DragDrop);
             this.txtgeneral.DragEnter += new System.Windows.Forms.DragEventHandler(this.Frmmain_DragEnter);
@@ -382,48 +383,48 @@
             // 
             this.wordWrapToolStripMenuItem.CheckOnClick = true;
             this.wordWrapToolStripMenuItem.Name = "wordWrapToolStripMenuItem";
-            this.wordWrapToolStripMenuItem.Size = new System.Drawing.Size(186, 26);
+            this.wordWrapToolStripMenuItem.Size = new System.Drawing.Size(221, 26);
             this.wordWrapToolStripMenuItem.Text = "Word Wrap";
             this.wordWrapToolStripMenuItem.Click += new System.EventHandler(this.wordWrapToolStripMenuItem_Click);
             // 
             // rightToLeftToolStripMenuItem
             // 
-            this.rightToLeftToolStripMenuItem.CheckOnClick = true;
             this.rightToLeftToolStripMenuItem.Name = "rightToLeftToolStripMenuItem";
-            this.rightToLeftToolStripMenuItem.Size = new System.Drawing.Size(186, 26);
+            this.rightToLeftToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
+            this.rightToLeftToolStripMenuItem.Size = new System.Drawing.Size(221, 26);
             this.rightToLeftToolStripMenuItem.Text = "Right To Left";
             this.rightToLeftToolStripMenuItem.Click += new System.EventHandler(this.rightToLeftToolStripMenuItem_Click);
             // 
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(183, 6);
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(218, 6);
             // 
             // fontToolStripMenuItem
             // 
             this.fontToolStripMenuItem.Name = "fontToolStripMenuItem";
-            this.fontToolStripMenuItem.Size = new System.Drawing.Size(186, 26);
+            this.fontToolStripMenuItem.Size = new System.Drawing.Size(221, 26);
             this.fontToolStripMenuItem.Text = "Font";
             this.fontToolStripMenuItem.Click += new System.EventHandler(this.fontToolStripMenuItem_Click);
             // 
             // backColorToolStripMenuItem
             // 
             this.backColorToolStripMenuItem.Name = "backColorToolStripMenuItem";
-            this.backColorToolStripMenuItem.Size = new System.Drawing.Size(186, 26);
+            this.backColorToolStripMenuItem.Size = new System.Drawing.Size(221, 26);
             this.backColorToolStripMenuItem.Text = "Back Color";
             this.backColorToolStripMenuItem.Click += new System.EventHandler(this.backColorToolStripMenuItem_Click);
             // 
             // foreColorToolStripMenuItem
             // 
             this.foreColorToolStripMenuItem.Name = "foreColorToolStripMenuItem";
-            this.foreColorToolStripMenuItem.Size = new System.Drawing.Size(186, 26);
+            this.foreColorToolStripMenuItem.Size = new System.Drawing.Size(221, 26);
             this.foreColorToolStripMenuItem.Text = "Fore Color";
             this.foreColorToolStripMenuItem.Click += new System.EventHandler(this.foreColorToolStripMenuItem_Click);
             // 
             // backToDefaultToolStripMenuItem
             // 
             this.backToDefaultToolStripMenuItem.Name = "backToDefaultToolStripMenuItem";
-            this.backToDefaultToolStripMenuItem.Size = new System.Drawing.Size(186, 26);
+            this.backToDefaultToolStripMenuItem.Size = new System.Drawing.Size(221, 26);
             this.backToDefaultToolStripMenuItem.Text = "Back to Default";
             this.backToDefaultToolStripMenuItem.Click += new System.EventHandler(this.backToDefaultToolStripMenuItem_Click);
             // 
