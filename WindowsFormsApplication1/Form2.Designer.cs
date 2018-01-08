@@ -44,35 +44,35 @@
             // lblfindwhat
             // 
             this.lblfindwhat.AutoSize = true;
-            this.lblfindwhat.Location = new System.Drawing.Point(9, 19);
+            this.lblfindwhat.Location = new System.Drawing.Point(8, 19);
             this.lblfindwhat.Name = "lblfindwhat";
-            this.lblfindwhat.Size = new System.Drawing.Size(72, 17);
+            this.lblfindwhat.Size = new System.Drawing.Size(71, 17);
             this.lblfindwhat.TabIndex = 0;
             this.lblfindwhat.Text = "Find What";
             // 
             // txtfind
             // 
-            this.txtfind.Location = new System.Drawing.Point(102, 17);
+            this.txtfind.Location = new System.Drawing.Point(89, 17);
             this.txtfind.Name = "txtfind";
-            this.txtfind.Size = new System.Drawing.Size(236, 22);
+            this.txtfind.Size = new System.Drawing.Size(207, 24);
             this.txtfind.TabIndex = 0;
             this.txtfind.TextChanged += new System.EventHandler(this.txtfind_TextChanged);
             // 
             // chbmatchcase
             // 
             this.chbmatchcase.AutoSize = true;
-            this.chbmatchcase.Location = new System.Drawing.Point(12, 91);
+            this.chbmatchcase.Location = new System.Drawing.Point(10, 91);
             this.chbmatchcase.Name = "chbmatchcase";
-            this.chbmatchcase.Size = new System.Drawing.Size(104, 21);
+            this.chbmatchcase.Size = new System.Drawing.Size(100, 21);
             this.chbmatchcase.TabIndex = 3;
             this.chbmatchcase.Text = "Match Case";
             this.chbmatchcase.UseVisualStyleBackColor = true;
             // 
             // btnfind
             // 
-            this.btnfind.Location = new System.Drawing.Point(352, 8);
+            this.btnfind.Location = new System.Drawing.Point(308, 8);
             this.btnfind.Name = "btnfind";
-            this.btnfind.Size = new System.Drawing.Size(111, 32);
+            this.btnfind.Size = new System.Drawing.Size(97, 32);
             this.btnfind.TabIndex = 1;
             this.btnfind.Text = "Find";
             this.btnfind.UseVisualStyleBackColor = true;
@@ -82,9 +82,9 @@
             // 
             this.grbdirection.Controls.Add(this.rdodown);
             this.grbdirection.Controls.Add(this.rdoup);
-            this.grbdirection.Location = new System.Drawing.Point(205, 51);
+            this.grbdirection.Location = new System.Drawing.Point(179, 51);
             this.grbdirection.Name = "grbdirection";
-            this.grbdirection.Size = new System.Drawing.Size(131, 61);
+            this.grbdirection.Size = new System.Drawing.Size(115, 61);
             this.grbdirection.TabIndex = 4;
             this.grbdirection.TabStop = false;
             this.grbdirection.Text = "Direction";
@@ -93,9 +93,9 @@
             // 
             this.rdodown.AutoSize = true;
             this.rdodown.Checked = true;
-            this.rdodown.Location = new System.Drawing.Point(66, 28);
+            this.rdodown.Location = new System.Drawing.Point(58, 28);
             this.rdodown.Name = "rdodown";
-            this.rdodown.Size = new System.Drawing.Size(64, 21);
+            this.rdodown.Size = new System.Drawing.Size(65, 21);
             this.rdodown.TabIndex = 1;
             this.rdodown.TabStop = true;
             this.rdodown.Text = "Down";
@@ -104,18 +104,18 @@
             // rdoup
             // 
             this.rdoup.AutoSize = true;
-            this.rdoup.Location = new System.Drawing.Point(7, 29);
+            this.rdoup.Location = new System.Drawing.Point(6, 29);
             this.rdoup.Name = "rdoup";
-            this.rdoup.Size = new System.Drawing.Size(47, 21);
+            this.rdoup.Size = new System.Drawing.Size(46, 21);
             this.rdoup.TabIndex = 0;
             this.rdoup.Text = "Up";
             this.rdoup.UseVisualStyleBackColor = true;
             // 
             // btnfindnext
             // 
-            this.btnfindnext.Location = new System.Drawing.Point(352, 47);
+            this.btnfindnext.Location = new System.Drawing.Point(308, 47);
             this.btnfindnext.Name = "btnfindnext";
-            this.btnfindnext.Size = new System.Drawing.Size(111, 32);
+            this.btnfindnext.Size = new System.Drawing.Size(97, 32);
             this.btnfindnext.TabIndex = 2;
             this.btnfindnext.Text = "Find Next";
             this.btnfindnext.UseVisualStyleBackColor = true;
@@ -123,9 +123,9 @@
             // 
             // btncancel
             // 
-            this.btncancel.Location = new System.Drawing.Point(352, 86);
+            this.btncancel.Location = new System.Drawing.Point(308, 86);
             this.btncancel.Name = "btncancel";
-            this.btncancel.Size = new System.Drawing.Size(111, 32);
+            this.btncancel.Size = new System.Drawing.Size(97, 32);
             this.btncancel.TabIndex = 4;
             this.btncancel.Text = "Cancel";
             this.btncancel.UseVisualStyleBackColor = true;
@@ -133,9 +133,9 @@
             // 
             // Frmfind
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(471, 135);
+            this.ClientSize = new System.Drawing.Size(412, 135);
             this.Controls.Add(this.btncancel);
             this.Controls.Add(this.btnfindnext);
             this.Controls.Add(this.grbdirection);
