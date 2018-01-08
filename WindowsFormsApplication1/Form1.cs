@@ -11,7 +11,6 @@ namespace WindowsFormsApplication1
 {
     public partial class Frmmain : Form
     {
-        string logsPath = AppDomain.CurrentDomain.BaseDirectory + "log.txt";
         myUndo undoClass = new myUndo();
         string fn;
         int mainFormHeight, mainFormWidth;
@@ -28,6 +27,11 @@ namespace WindowsFormsApplication1
         //zamani ke selectionLength sefr nist va dokme backspace feshordeh mishavad ghabl az pak shodan
         //yek bar settext dar keypress va sepas be komake in moteghayyer yek bar dar textchanged farakhani
         //khahad shod.
+        Encoding generalEncode;
+        //string logsPath = AppDomain.CurrentDomain.BaseDirectory + "log.txt";
+        string logsDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\NotepadSharp\\";
+        string logsFileName = "log.txt";
+        string logsPath;
         public void setUndoChecked(Boolean b) { undoToolStripMenuItem.Enabled = b; }
         public void setRedoChecked(Boolean b) { redoToolStripMenuItem.Enabled = b; }
         public string sendSearchString()
@@ -107,6 +111,51 @@ namespace WindowsFormsApplication1
             else
                 return fn.Substring(0, index - 1);
         }
+        public Encoding returnFileEncoding(string filePath)
+        {
+            byte[] bom = new byte[5];
+            System.IO.FileStream file = new System.IO.FileStream(filePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+            file.Read(bom, 0, 5);
+            file.Close();
+
+            // Analyze the BOM
+            if (bom[0] == 0x2b && bom[1] == 0x2f && bom[2] == 0x76) return Encoding.UTF7;
+            if (bom[0] == 0xef && bom[1] == 0xbb && bom[2] == 0xbf) return Encoding.UTF8;
+            if (bom[0] == 0xff && bom[1] == 0xfe) return Encoding.Unicode; //UTF-16LE
+            if (bom[0] == 0xfe && bom[1] == 0xff) return Encoding.BigEndianUnicode; //UTF-16BE
+            if (bom[0] == 0 && bom[1] == 0 && bom[2] == 0xfe && bom[3] == 0xff) return Encoding.UTF32;
+            else return Encoding.Default; //ANSI
+        }
+        private Encoding sendEncodingFromMenu()
+        {
+            ToolStripMenuItem checkedMenu=new ToolStripMenuItem();
+            foreach(ToolStripMenuItem Menu in encodingToolStripMenuItem.DropDownItems)
+            {
+                if (Menu.Checked == true)
+                {
+                    checkedMenu = Menu;
+                    break;
+                }
+            }
+            if (checkedMenu.Text == "ANSI") return Encoding.Default;
+            else if (checkedMenu.Text == "Unicode") return Encoding.Unicode;
+            else if (checkedMenu.Text == "Unicode big endian") return Encoding.BigEndianUnicode;
+            else if (checkedMenu.Text == "UTF-8") return Encoding.UTF8;
+            else if (checkedMenu.Text == "UTF-7") return Encoding.UTF7;
+            else if (checkedMenu.Text == "UTF-32") return Encoding.UTF32;
+            else return null;
+            //Halate Akhar Rokh nemidahad faghat gozashte shode ta barname erore campail nadahad.
+        }
+        private void setEncodingMenuCheckedFromEncodings(Encoding enc)
+        {
+            if (enc == Encoding.Default) encodingsCheckedFunction(aNSIToolStripMenuItem, null);
+            else if (enc == Encoding.Unicode) encodingsCheckedFunction(unicodeToolStripMenuItem, null);
+            else if (enc == Encoding.BigEndianUnicode) encodingsCheckedFunction(bigToolStripMenuItem, null);
+            else if (enc == Encoding.UTF8) encodingsCheckedFunction(uTF8ToolStripMenuItem, null);
+            else if (enc == Encoding.UTF7) encodingsCheckedFunction(uTF7ToolStripMenuItem, null);
+            else if (enc == Encoding.UTF32) encodingsCheckedFunction(uTF32ToolStripMenuItem, null);
+            else throw new System.Exception();
+        }
         private void StoreSaveAndOpenDialogSettings()
         {
             NotepadSharp.Properties.Settings.Default.SaveAndOpenDialogPath = sendDirectory();
@@ -172,7 +221,8 @@ namespace WindowsFormsApplication1
         {
             fn = path;
             setTitle();
-            txtgeneral.Text = System.IO.File.ReadAllText(fn);
+            txtgeneral.Text = System.IO.File.ReadAllText(fn,returnFileEncoding(fn));
+            setEncodingMenuCheckedFromEncodings(returnFileEncoding(fn));
             undoClass.startFromBeginning(txtgeneral, this);
             textChangedUndoSetText = false;
             SaveFlag = true;
@@ -231,24 +281,25 @@ namespace WindowsFormsApplication1
                 if (x==DialogResult.OK)
                 {
                     fn = saveFileDialog1.FileName;
+                    System.IO.File.WriteAllText(fn, txtgeneral.Text,sendEncodingFromMenu());
                     SaveFlag = true;
                     setTitle();
                     StoreSaveAndOpenDialogSettings();
                 }
             }
-            if (fn != null)
+            else if (fn != null)
             {
-                System.IO.File.WriteAllText(fn, txtgeneral.Text);
+                System.IO.File.WriteAllText(fn, txtgeneral.Text,sendEncodingFromMenu());
                 SaveFlag = true;
             }
         }
 
         private void Frmmain_Load(object sender, EventArgs e)
         {
+            logsPath = logsDirectory + logsFileName;
             if (NotepadSharp.Properties.Settings.Default.SaveAndOpenDialogPath == "")
                 NotepadSharp.Properties.Settings.Default.SaveAndOpenDialogPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             ZeroTxtgeneralSelection();
-            fn = null;
             setTitle();
             SaveFlag = true;
             undoClass.startFromBeginning(txtgeneral,this);
@@ -297,6 +348,7 @@ namespace WindowsFormsApplication1
                 txtgeneral.Text = "";
                 SaveFlag = true;
                 undoClass.startFromBeginning(txtgeneral,this);
+                encodingsCheckedFunction(uTF8ToolStripMenuItem, null);
             }
         }
 
@@ -347,7 +399,7 @@ namespace WindowsFormsApplication1
             {
                 fn = saveFileDialog1.FileName;
                 setTitle();
-                System.IO.File.WriteAllText(fn, txtgeneral.Text);
+                System.IO.File.WriteAllText(fn, txtgeneral.Text,sendEncodingFromMenu());
                 SaveFlag = true;
                 StoreSaveAndOpenDialogSettings();
             }
@@ -720,11 +772,17 @@ namespace WindowsFormsApplication1
 
         private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            undoClass.setText(txtgeneral, this);
-            txtgeneral.Text = System.IO.File.ReadAllText(fn);
-            undoClass.setText(txtgeneral, this);
-            undoClass.aghabgardTruer();
-            SaveFlag = true;
+            if (fn != null)
+            {
+                DialogResult x;
+                x = MessageBox.Show("Changes may lost. Are you sure?", "Notepad#", MessageBoxButtons.OKCancel);
+                if (x == DialogResult.OK)
+                {
+                    openFile(fn);
+                }
+            }
+            else
+                MessageBox.Show("This file does not exist on disk!", "Notepad#");
         }
 
         private void backToDefaultToolStripMenuItem_Click(object sender, EventArgs e)
@@ -770,16 +828,17 @@ namespace WindowsFormsApplication1
 
         private void Frmmain_DragDrop(object sender, DragEventArgs e)
         {
-            // Extract the data from the DataObject-Container into a string list
-            string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            newToolStripMenuItem_Click_Flag = false;
+            ToolStripMenuItem temp = new ToolStripMenuItem();
+            newToolStripMenuItem_Click(temp, null);
+            if (newToolStripMenuItem_Click_Flag)
+            {
+                // Extract the data from the DataObject-Container into a string list
+                string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
 
-            // Do something with the data...
-            txtgeneral.Text = System.IO.File.ReadAllText(FileList[0]);
-            fn = FileList[0];
-            setTitle();
-            SaveFlag = true;
-            undoClass.startFromBeginning(txtgeneral, this);
-            textChangedUndoSetText = false;
+                // Do something with the data...
+                openFile(FileList[0]);
+            }
         }
 
         private void Frmmain_DragEnter(object sender, DragEventArgs e)
@@ -803,7 +862,30 @@ namespace WindowsFormsApplication1
             if (System.IO.File.Exists(logsPath))
                 System.IO.File.AppendAllText(logsPath, Environment.NewLine + "[" + sendCurrentTimeAndDate() + "] --> ");
             else
+            {
+                if (!System.IO.Directory.Exists(logsDirectory))
+                    System.IO.Directory.CreateDirectory(logsDirectory);
                 System.IO.File.WriteAllText(logsPath, "[" + sendCurrentTimeAndDate() + "] --> ");
+            }
+        }
+
+        private void rightToLeftToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (txtgeneral.RightToLeft == RightToLeft.No)
+                txtgeneral.RightToLeft = RightToLeft.Yes;
+            else
+                txtgeneral.RightToLeft = RightToLeft.No;
+        }
+
+        private void encodingsCheckedFunction(object sender, EventArgs e)
+        {
+            foreach (ToolStripMenuItem Menu in encodingToolStripMenuItem.DropDownItems)
+            {
+                if (sender.Equals(Menu))
+                    Menu.Checked = true;
+                else
+                    Menu.Checked = false;
+            }
         }
 
         private void setLogout()

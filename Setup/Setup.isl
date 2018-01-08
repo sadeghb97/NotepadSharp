@@ -342,9 +342,9 @@
 		<col def="S0">ISDotNetInstallerArgsCommit</col>
 		<col def="S0">ISDotNetInstallerArgsUninstall</col>
 		<col def="S0">ISDotNetInstallerArgsRollback</col>
-		<row><td>ISX_DEFAULTCOMPONENT</td><td>{1AE69C2B-BA8F-41A3-A3C2-CAA28DDB35D3}</td><td>NOTEPADSHARP</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT</td><td>{1AE69C2B-BA8F-41A3-A3C2-CAA28DDB35D3}</td><td>NOTEPADSHARP_V1</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>IS_ININSTALL_SHORTCUT</td><td>{EEE895AB-9E4D-4D88-9DF0-B4A15C0CCD62}</td><td>INSTALLDIR</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>WindowsFormsApplication1.Primary_output</td><td>{18EB8800-4296-454B-BEC5-74284FF94D69}</td><td>NOTEPADSHARP</td><td>2</td><td/><td>windowsformsapplication1.pri</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>WindowsFormsApplication1.Primary_output</td><td>{18EB8800-4296-454B-BEC5-74284FF94D69}</td><td>NOTEPADSHARP_V1</td><td>2</td><td/><td>windowsformsapplication1.pri</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 	</table>
 
 	<table name="Condition">
@@ -1056,8 +1056,8 @@
 		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT</td></row>
 		<row><td>INSTALLDIR</td><td>IS_ININSTALL_SHORTCUT</td></row>
 		<row><td>INSTALLDIR</td><td>WindowsFormsApplication1.Primary_output</td></row>
-		<row><td>NOTEPADSHARP</td><td>ISX_DEFAULTCOMPONENT</td></row>
-		<row><td>NOTEPADSHARP</td><td>WindowsFormsApplication1.Primary_output</td></row>
+		<row><td>NOTEPADSHARP_V1</td><td>ISX_DEFAULTCOMPONENT</td></row>
+		<row><td>NOTEPADSHARP_V1</td><td>WindowsFormsApplication1.Primary_output</td></row>
 	</table>
 
 	<table name="CustomAction">
@@ -1155,7 +1155,7 @@
 		<row><td>LocalAppDataFolder</td><td>TARGETDIR</td><td>.:LocalA~1|LocalAppData</td><td/><td>0</td><td/></row>
 		<row><td>MY_PRODUCT_NAME</td><td>SADEGH_BAGHERZADEH</td><td>MYPROD~1|My Product Name</td><td/><td>0</td><td/></row>
 		<row><td>MyPicturesFolder</td><td>TARGETDIR</td><td>.:MyPict~1|MyPictures</td><td/><td>0</td><td/></row>
-		<row><td>NOTEPADSHARP</td><td>INSTALLDIR</td><td>NOTEPA~1|NotepadSharp</td><td/><td>0</td><td/></row>
+		<row><td>NOTEPADSHARP_V1</td><td>INSTALLDIR</td><td>NOTEPA~1|NotepadSharp V1</td><td/><td>0</td><td/></row>
 		<row><td>NOTEPAD_</td><td>SADEGH_BAGHERZADEH</td><td>Notepad#</td><td/><td>0</td><td/></row>
 		<row><td>NetHoodFolder</td><td>TARGETDIR</td><td>.:NetHood</td><td/><td>0</td><td/></row>
 		<row><td>PersonalFolder</td><td>TARGETDIR</td><td>.:Personal</td><td/><td>0</td><td/></row>
@@ -2626,7 +2626,7 @@
 		<col def="I2">Encoded</col>
 		<col def="S0">Comment</col>
 		<col def="I4">TimeStamp</col>
-		<row><td>COMPANY_NAME</td><td>1033</td><td>SBPro</td><td>0</td><td/><td>-1943743661</td></row>
+		<row><td>COMPANY_NAME</td><td>1033</td><td>SBPro</td><td>0</td><td/><td>-1406875466</td></row>
 		<row><td>DN_AlwaysInstall</td><td>1033</td><td>Always Install</td><td>0</td><td/><td>-1943780447</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_COLOR</td><td>1033</td><td>The color settings of your system are not adequate for running [ProductName].</td><td>0</td><td/><td>-1943780447</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_DOTNETVERSION35</td><td>1033</td><td>Microsoft .NET Framework 3.5 needs to be installed for this installation to continue.</td><td>0</td><td/><td>-1943794591</td></row>
@@ -3729,8 +3729,8 @@
 		<row><td>IDS__TargetReq_DESC_RAM</td><td>1033</td><td>The amount of RAM is not adequate for running [ProductName].</td><td>0</td><td/><td>-1943780447</td></row>
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>1033</td><td>The screen resolution is not adequate for running [ProductName].</td><td>0</td><td/><td>-1943780447</td></row>
 		<row><td>ID_STRING1</td><td>1033</td><td/><td>0</td><td/><td>-1943780447</td></row>
-		<row><td>ID_STRING2</td><td>1033</td><td>http://www.SBPro.com</td><td>0</td><td/><td>-1943743661</td></row>
-		<row><td>ID_STRING3</td><td>1033</td><td>SBPro</td><td>0</td><td/><td>-1943743661</td></row>
+		<row><td>ID_STRING2</td><td>1033</td><td>http://www.SBPro.com</td><td>0</td><td/><td>-1406875466</td></row>
+		<row><td>ID_STRING3</td><td>1033</td><td>SBPro</td><td>0</td><td/><td>-1406875466</td></row>
 		<row><td>ID_STRING4</td><td>1033</td><td>Notepad#</td><td>0</td><td/><td>-1943783583</td></row>
 		<row><td>ID_STRING5</td><td>1033</td><td>Notepad#</td><td>0</td><td/><td>-1943773458</td></row>
 		<row><td>IIDS_UITEXT_FeatureUninstalled</td><td>1033</td><td>This feature will remain uninstalled.</td><td>0</td><td/><td>-1943780447</td></row>
@@ -4356,7 +4356,7 @@ RABWAEQALQA1AAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS</td><td>##IDS_PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS##</td><td/></row>
 		<row><td>ProductCode</td><td>{BE70F7D9-5F0C-4FEC-B499-F9E6131AF5BE}</td><td/></row>
 		<row><td>ProductName</td><td>NotepadSharp</td><td/></row>
-		<row><td>ProductVersion</td><td>1.00.0000</td><td/></row>
+		<row><td>ProductVersion</td><td>1.10.0000</td><td/></row>
 		<row><td>ProgressType0</td><td>install</td><td/></row>
 		<row><td>ProgressType1</td><td>Installing</td><td/></row>
 		<row><td>ProgressType2</td><td>installed</td><td/></row>

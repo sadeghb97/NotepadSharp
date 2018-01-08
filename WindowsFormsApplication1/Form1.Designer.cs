@@ -61,6 +61,7 @@
             this.timeDateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.formatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wordWrapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rightToLeftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
             this.fontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,6 +69,13 @@
             this.backToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.encodingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aNSIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.unicodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bigToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.uTF8ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.uTF7ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.uTF32ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutNotepadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StatusBar1 = new System.Windows.Forms.StatusStrip();
@@ -95,6 +103,7 @@
             this.txtgeneral.Margin = new System.Windows.Forms.Padding(4);
             this.txtgeneral.Multiline = true;
             this.txtgeneral.Name = "txtgeneral";
+            this.txtgeneral.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.txtgeneral.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtgeneral.Size = new System.Drawing.Size(754, 450);
             this.txtgeneral.TabIndex = 0;
@@ -115,6 +124,7 @@
             this.editToolStripMenuItem,
             this.formatToolStripMenuItem,
             this.viewToolStripMenuItem,
+            this.encodingToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -358,6 +368,7 @@
             // 
             this.formatToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.wordWrapToolStripMenuItem,
+            this.rightToLeftToolStripMenuItem,
             this.toolStripMenuItem6,
             this.fontToolStripMenuItem,
             this.backColorToolStripMenuItem,
@@ -374,6 +385,14 @@
             this.wordWrapToolStripMenuItem.Size = new System.Drawing.Size(186, 26);
             this.wordWrapToolStripMenuItem.Text = "Word Wrap";
             this.wordWrapToolStripMenuItem.Click += new System.EventHandler(this.wordWrapToolStripMenuItem_Click);
+            // 
+            // rightToLeftToolStripMenuItem
+            // 
+            this.rightToLeftToolStripMenuItem.CheckOnClick = true;
+            this.rightToLeftToolStripMenuItem.Name = "rightToLeftToolStripMenuItem";
+            this.rightToLeftToolStripMenuItem.Size = new System.Drawing.Size(186, 26);
+            this.rightToLeftToolStripMenuItem.Text = "Right To Left";
+            this.rightToLeftToolStripMenuItem.Click += new System.EventHandler(this.rightToLeftToolStripMenuItem_Click);
             // 
             // toolStripMenuItem6
             // 
@@ -423,6 +442,63 @@
             this.statusToolStripMenuItem.Size = new System.Drawing.Size(150, 26);
             this.statusToolStripMenuItem.Text = "Status Bar";
             this.statusToolStripMenuItem.Click += new System.EventHandler(this.statusToolStripMenuItem_Click);
+            // 
+            // encodingToolStripMenuItem
+            // 
+            this.encodingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aNSIToolStripMenuItem,
+            this.unicodeToolStripMenuItem,
+            this.bigToolStripMenuItem,
+            this.uTF8ToolStripMenuItem,
+            this.uTF7ToolStripMenuItem,
+            this.uTF32ToolStripMenuItem});
+            this.encodingToolStripMenuItem.Name = "encodingToolStripMenuItem";
+            this.encodingToolStripMenuItem.Size = new System.Drawing.Size(83, 24);
+            this.encodingToolStripMenuItem.Text = "Encoding";
+            // 
+            // aNSIToolStripMenuItem
+            // 
+            this.aNSIToolStripMenuItem.Name = "aNSIToolStripMenuItem";
+            this.aNSIToolStripMenuItem.Size = new System.Drawing.Size(214, 26);
+            this.aNSIToolStripMenuItem.Text = "ANSI";
+            this.aNSIToolStripMenuItem.Click += new System.EventHandler(this.encodingsCheckedFunction);
+            // 
+            // unicodeToolStripMenuItem
+            // 
+            this.unicodeToolStripMenuItem.Name = "unicodeToolStripMenuItem";
+            this.unicodeToolStripMenuItem.Size = new System.Drawing.Size(214, 26);
+            this.unicodeToolStripMenuItem.Text = "Unicode";
+            this.unicodeToolStripMenuItem.Click += new System.EventHandler(this.encodingsCheckedFunction);
+            // 
+            // bigToolStripMenuItem
+            // 
+            this.bigToolStripMenuItem.Name = "bigToolStripMenuItem";
+            this.bigToolStripMenuItem.Size = new System.Drawing.Size(214, 26);
+            this.bigToolStripMenuItem.Text = "Unicode big endian";
+            this.bigToolStripMenuItem.Click += new System.EventHandler(this.encodingsCheckedFunction);
+            // 
+            // uTF8ToolStripMenuItem
+            // 
+            this.uTF8ToolStripMenuItem.Checked = true;
+            this.uTF8ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.uTF8ToolStripMenuItem.Name = "uTF8ToolStripMenuItem";
+            this.uTF8ToolStripMenuItem.Size = new System.Drawing.Size(214, 26);
+            this.uTF8ToolStripMenuItem.Text = "UTF-8";
+            this.uTF8ToolStripMenuItem.Click += new System.EventHandler(this.encodingsCheckedFunction);
+            // 
+            // uTF7ToolStripMenuItem
+            // 
+            this.uTF7ToolStripMenuItem.Name = "uTF7ToolStripMenuItem";
+            this.uTF7ToolStripMenuItem.Size = new System.Drawing.Size(214, 26);
+            this.uTF7ToolStripMenuItem.Text = "UTF-7";
+            this.uTF7ToolStripMenuItem.Click += new System.EventHandler(this.encodingsCheckedFunction);
+            // 
+            // uTF32ToolStripMenuItem
+            // 
+            this.uTF32ToolStripMenuItem.Name = "uTF32ToolStripMenuItem";
+            this.uTF32ToolStripMenuItem.Size = new System.Drawing.Size(214, 26);
+            this.uTF32ToolStripMenuItem.Text = "UTF-32";
+            this.uTF32ToolStripMenuItem.Click += new System.EventHandler(this.encodingsCheckedFunction);
             // 
             // helpToolStripMenuItem
             // 
@@ -571,6 +647,14 @@
         private System.Windows.Forms.ToolStripMenuItem backToDefaultToolStripMenuItem;
         private System.Windows.Forms.PageSetupDialog pageSetupDialog1;
         private System.Windows.Forms.ToolStripMenuItem pageSetupToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rightToLeftToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem encodingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem uTF8ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem unicodeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bigToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem uTF7ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem uTF32ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aNSIToolStripMenuItem;
     }
 }
 
