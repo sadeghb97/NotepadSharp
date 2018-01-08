@@ -27,11 +27,11 @@ namespace WindowsFormsApplication1
         //zamani ke selectionLength sefr nist va dokme backspace feshordeh mishavad ghabl az pak shodan
         //yek bar settext dar keypress va sepas be komake in moteghayyer yek bar dar textchanged farakhani
         //khahad shod.
-        Encoding generalEncode;
         //string logsPath = AppDomain.CurrentDomain.BaseDirectory + "log.txt";
         string logsDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\NotepadSharp\\";
         string logsFileName = "log.txt";
         string logsPath;
+        string LogIn;
         public void setUndoChecked(Boolean b) { undoToolStripMenuItem.Enabled = b; }
         public void setRedoChecked(Boolean b) { redoToolStripMenuItem.Enabled = b; }
         public string sendSearchString()
@@ -481,10 +481,15 @@ namespace WindowsFormsApplication1
             {
                 txtgeneral.SelectionStart = i;
                 txtgeneral.SelectionLength = s.Length;
+                txtgeneral.ScrollToCaret();
                 txtgeneral.Focus();
             }
-            if (showMessage) if(i==-1) MessageBox.Show("Cannot find " + "\"" + s + "\"", "Notepad#");
-            txtgeneral.Focus();
+            if (showMessage)
+                if (i == -1)
+                {
+                    MessageBox.Show("Cannot find " + "\"" + s + "\"", "Notepad#");
+                    txtgeneral.Focus();
+                }
             if (i != -1) return true;
             else return false;
         }
@@ -603,9 +608,27 @@ namespace WindowsFormsApplication1
 
         private void txtgeneral_KeyDown(object sender, KeyEventArgs e)
         {
-           if(e.KeyCode == Keys.Down || e.KeyCode == Keys.Up || e.KeyCode == Keys.Right || e.KeyCode == Keys.Left)
+            if (e.KeyCode == Keys.Down || e.KeyCode == Keys.Up || e.KeyCode == Keys.Right || e.KeyCode == Keys.Left)
             {
                 setStatusBarRowColumn();
+            }
+            if (e.Control && e.KeyCode == Keys.ShiftKey)
+            {
+                e.Handled = true;
+            }
+            if (e.KeyCode == Keys.Delete)
+            {
+                if (txtgeneral.SelectionStart != txtgeneral.TextLength)
+                {
+                    KeyPressEventArgs kp = new KeyPressEventArgs('\b');
+                    KeyEventArgs k = new KeyEventArgs(Keys.Back);
+                    txtgeneral.SelectionStart++;
+                    txtgeneral_KeyDown(null, k);
+                    txtgeneral_KeyPress(null, kp);
+                    SendKeys.Send("{BS}");
+                    txtgeneral_KeyUp(null, k);
+                    txtgeneral.Focus();
+                }
             }
         }
         private void setStatusBarRowColumn()
@@ -859,14 +882,15 @@ namespace WindowsFormsApplication1
         }
         private void setLogin()
         {
-            if (System.IO.File.Exists(logsPath))
+            /*if (System.IO.File.Exists(logsPath))
                 System.IO.File.AppendAllText(logsPath, Environment.NewLine + "[" + sendCurrentTimeAndDate() + "] --> ");
             else
             {
                 if (!System.IO.Directory.Exists(logsDirectory))
                     System.IO.Directory.CreateDirectory(logsDirectory);
                 System.IO.File.WriteAllText(logsPath, "[" + sendCurrentTimeAndDate() + "] --> ");
-            }
+            }*/
+            LogIn = "[" + sendCurrentTimeAndDate() + "] --> ";
         }
 
         private void rightToLeftToolStripMenuItem_Click(object sender, EventArgs e)
@@ -888,14 +912,32 @@ namespace WindowsFormsApplication1
             }
         }
 
+        private void txtgeneral_RightToLeftChanged(object sender, EventArgs e)
+        {
+            if (txtgeneral.RightToLeft == RightToLeft.Yes)
+                rightToLeftToolStripMenuItem.Checked = true;
+            else
+                rightToLeftToolStripMenuItem.Checked = false;
+
+        }
+
         private void setLogout()
         {
-            System.IO.File.AppendAllText(logsPath, "[" + sendCurrentTimeAndDate() + "]");
+            //System.IO.File.AppendAllText(logsPath, "[" + sendCurrentTimeAndDate() + "]");
+            if (System.IO.File.Exists(logsPath))
+                System.IO.File.AppendAllText(logsPath, Environment.NewLine + LogIn + "[" + sendCurrentTimeAndDate() + "]");
+            else
+            {
+                if (!System.IO.Directory.Exists(logsDirectory))
+                    System.IO.Directory.CreateDirectory(logsDirectory);
+                System.IO.File.WriteAllText(logsPath, LogIn + "[" + sendCurrentTimeAndDate() + "]");
+            }
         }
     }
     class myUndo
     {
         Boolean allowUndoSetText;
+        //zamani ke false bashad settext farakhani nakhahad shod.
         int numberOfSpaces;
         string[] temp = new string[350];
         int[] tempSelectionStart = new int[350];
